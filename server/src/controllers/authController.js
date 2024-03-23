@@ -1,6 +1,6 @@
 import User from "../models/User.js"
-import { userErrorHandler } from "../../utils/errorHandlers.js";
-import { getAccessToken, getRefreshToken, parseUserId } from "../../utils/jwtUtils.js";
+import { userErrorHandler } from "../utils/errorHandlers.js";
+import { getAccessToken, getRefreshToken, parseUserId } from "../utils/jwtUtils.js";
 import bcrypt from 'bcrypt';
 
 export const login = async (req, res) => {

@@ -1,14 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './src/routes/authRoutes.js';
-import { jwtFilterChain } from './security/jwtMiddleware.js';
+import { jwtFilterChain } from './src/middlewares/jwtMiddleware.js';
 
 const app = express();
 
-
 const dbURI = 'mongodb+srv://giorgileladze78:QAwl9nc2k5B8Blu5@products-api.pbj3ill.mongodb.net/products-api';
 mongoose.connect(dbURI).then(() => {
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
 }).catch((err) => console.log(err))
 
 
