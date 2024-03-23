@@ -26,11 +26,12 @@ export const parseUserId = (token) => {
         return null;
     }
 
+    let id = null;
     jwt.verify(token, JWT_SECRET_KEY, (err, data) => {
         if(data){
-            return data.id;
+            id = data.id;
         }
     })
 
-    return null;
+    return id;
 }

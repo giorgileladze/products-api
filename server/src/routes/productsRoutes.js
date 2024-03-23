@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProduct, getProductById, getProducts } from "../controllers/productsController.js";
+import { createProduct, getProductById, getProducts, getProductsById } from "../controllers/productsController.js";
 
 const router = Router();
 
@@ -13,8 +13,13 @@ router.post('/', (req, res, next) => {
     createProduct(req, res);
 })
 
+// get products by id
+router.get('/ids', (req, res, next) => {
+    getProductsById(req, res);
+})
+
 // get product by id
-router.get('/:productId', (req, res, next) => {
+router.get('/details/:productId', (req, res, next) => {
     getProductById(req, res);
 })
 

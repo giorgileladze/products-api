@@ -5,6 +5,7 @@ import { jwtFilterChain } from './src/middlewares/jwtMiddleware.js';
 import setHeaders from './src/middlewares/setHeaders.js';
 import upload from './src/middlewares/multerMiddleware.js';
 import productsRoutes from './src/routes/productsRoutes.js';
+import ordersRoutes from './src/routes/ordersRoutes.js';
 
 const app = express();
 
@@ -21,3 +22,4 @@ app.use(setHeaders);
 // register routes
 app.use('/auth', authRoutes);
 app.use('/products', upload.single('file'), productsRoutes);
+app.use('/order', jwtFilterChain,  ordersRoutes); // protect all routes since orders are user specific

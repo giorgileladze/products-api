@@ -1,6 +1,7 @@
 import Product from "../models/Product.js";
 import { productsErrorHandler } from "../utils/errorHandlers.js";
 
+// get all products
 export const getProducts = async (req, res) => {
     const { 
         page = 1,
@@ -23,6 +24,7 @@ export const getProducts = async (req, res) => {
     }
 }
 
+// create new product
 export const createProduct = async (req, res) => {
     const {
         name,
@@ -48,7 +50,7 @@ export const createProduct = async (req, res) => {
         });
     }
 }
-
+// get single product by id
 export const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.productId);
@@ -67,5 +69,37 @@ export const getProductById = async (req, res) => {
         res.json({
             error: err.message || "Something went wrong"
         });
+    }
+}
+
+// discard bought quantities from products
+export const buyProducts = async (products) => {
+    const bulkUpdateOps = products.map(({ _id, quantity }) => ({
+        updateOne: {
+            filter: { _id: _id },
+            update: { $inc: { quantity: -quantity } } // Subtracting quantity from the existing quantity
+        }
+    }));
+
+    const result = await Product.bulkWrite(bulkUpdateOps);
+
+    return result;
+}
+
+// get products by ids
+export const getProductsById = async (req, res) => {
+    try {
+        const ids = req.body.products;
+
+        if(!ids){
+            throw new Error('No product ids provided');
+        }
+        const products = await Product.find({_id: {$in: ids}});
+
+        res.status(200).json(products);
+    } catch (err) {
+        res.status(400).json({
+            error: err.message
+        })
     }
 }
