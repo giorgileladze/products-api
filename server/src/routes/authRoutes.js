@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, signup } from "../controllers/authController.js";
+import { login, signup, renewAccessToken } from "../controllers/authController.js";
 
 const router = Router();
 
@@ -9,6 +9,10 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
     login(req, res);
+})
+
+router.get('get-access-token', (req, res, next) => {
+    renewAccessToken(req, res);
 })
 
 export default router;

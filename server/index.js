@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './src/routes/authRoutes.js';
+import { jwtFilterChain } from './security/jwtMiddleware.js';
 
 const app = express();
 
@@ -14,8 +15,8 @@ mongoose.connect(dbURI).then(() => {
 // middlewares
 app.use(express.json());
 
+// register routes
 app.use('/auth', authRoutes);
-
 
 
 
