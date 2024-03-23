@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import authRoutes from './src/routes/authRoutes.js';
 
 const app = express();
 
@@ -10,12 +11,10 @@ mongoose.connect(dbURI).then(() => {
 }).catch((err) => console.log(err))
 
 
-app.get('/', (req, res, next) => {
-    res.status(201).json({
-        message: 'good'
-    })
-})
+// middlewares
+app.use(express.json());
 
+app.use('/auth', authRoutes);
 
 
 
