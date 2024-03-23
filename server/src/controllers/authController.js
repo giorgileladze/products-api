@@ -57,7 +57,7 @@ export const signup = async (req, res) => {
      } catch(err) {
           const errors = userErrorHandler(err);
 
-          res.status(err.status || 400).json({
+          res.status(err.code || 400).json({
                errors: errors
           });
      }

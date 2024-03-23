@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-// I am not providing endpoints for product manipulations (add/delete/update) for time reasons
-// and it was not requested in the task as well
-// instead i will add products manually in db
 const productSchema = new Schema({
     name: {
         type: String,
@@ -17,15 +14,19 @@ const productSchema = new Schema({
     description: {
         type: String,
         maxLength: 500,
-        minLength: 50
+        minLength: 50,
+        required: true
     },
     smallDescription: {
         type: String,
         maxLength: 100,
-        minLength: 10
+        minLength: 10,
+        required: true
     },
     img: {
-        type: String
+        type: String,
+        required: true,
+        minLength: 1
     },
     quantity: {
         type: Number,
@@ -33,6 +34,6 @@ const productSchema = new Schema({
     }
 });
 
-const Product = model('product', productSchema);
+const Product = model('products', productSchema);
 
 export default Product;
