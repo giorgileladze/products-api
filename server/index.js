@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './src/routes/authRoutes.js';
 import { jwtFilterChain } from './src/middlewares/jwtMiddleware.js';
+import setHeaders from './src/middlewares/setHeaders.js';
+import upload from './src/middlewares/multerMiddleware.js';
 
 const app = express();
 
@@ -13,9 +15,13 @@ mongoose.connect(dbURI).then(() => {
 
 // middlewares
 app.use(express.json());
+app.use(setHeaders);
 
 // register routes
 app.use('/auth', authRoutes);
+app.post('/file', upload.single('file'), (req, res, next) => {
+    res.status(200).json(req.file);
+})
 
 
 
