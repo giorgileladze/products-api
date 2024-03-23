@@ -11,7 +11,7 @@ router.post('/login', (req, res, next) => {
     login(req, res);
 })
 
-router.get('get-access-token', (req, res, next) => {
+router.get('/get-access-token', (req, res, next) => {
     renewAccessToken(req, res);
 })
 
