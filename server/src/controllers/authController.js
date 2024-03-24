@@ -33,13 +33,7 @@ export const login = async (req, res) => {
 }
 
 export const signup = async (req, res) => {
-     const { username, email, password, repeatPassword } = req.body;
-
-     if(repeatPassword !== password) {
-          return res.status(400).json({
-               error: 'Password does not match.'
-          });
-     }
+     const { username, email, password } = req.body;
 
      try {
           const user = new User({username, email, password});
