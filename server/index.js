@@ -6,6 +6,9 @@ import setHeaders from './src/middlewares/setHeaders.js';
 import upload from './src/middlewares/multerMiddleware.js';
 import productsRoutes from './src/routes/productsRoutes.js';
 import ordersRoutes from './src/routes/ordersRoutes.js';
+import { URL } from 'url';
+
+const __dirname = new URL('.', import.meta.url).pathname;
 
 const app = express();
 
@@ -23,3 +26,4 @@ app.use(setHeaders);
 app.use('/auth', authRoutes);
 app.use('/products', upload.single('file'), productsRoutes);
 app.use('/order', jwtFilterChain,  ordersRoutes); // protect all routes since orders are user specific
+app.get('/uploads/:rest', (req, res, next) => res.sendFile(__dirname + 'uploads/' + req.params.rest))

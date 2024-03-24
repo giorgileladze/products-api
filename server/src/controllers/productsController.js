@@ -11,6 +11,7 @@ export const getProducts = async (req, res) => {
     try {
         const products = await Product.find().skip((page - 1) * count).limit(count);
         const productsCount = await Product.countDocuments();
+        products.forEach(pr => pr.img = req.get('host') + '/' + pr.img)
         res.status(200).json({
             hasNext: productsCount > count * page,
             count: productsCount,
@@ -60,7 +61,7 @@ export const getProductById = async (req, res) => {
                 message: 'Product not found'
             });
         }
-
+        product.img = req.get('host') + '/' + product.img;
         res.status(200).json({product})
         
     } catch (err) {
@@ -95,7 +96,7 @@ export const getProductsById = async (req, res) => {
             throw new Error('No product ids provided');
         }
         const products = await Product.find({_id: {$in: ids}});
-
+        products.forEach(pr => pr.img = req.get('host') + '/' + pr.img)
         res.status(200).json(products);
     } catch (err) {
         res.status(400).json({
